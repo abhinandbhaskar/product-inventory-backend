@@ -35,29 +35,43 @@ class Products(models.Model):
         ordering = ("-CreatedDate", "ProductID")
 
 
+
+
+
 class Variant(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='variants')
-    name = models.CharField(max_length=100)  # this field we can add 'size', 'color'
+    name = models.CharField(max_length=100, unique=True)  # e.g., Size, Color
 
     def __str__(self):
-        return f"{self.product.ProductName} - {self.name}"
+        return self.name
+
 
 
 class SubVariant(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     variant = models.ForeignKey(Variant, on_delete=models.CASCADE, related_name='options')
-    value = models.CharField(max_length=100)  # this field we can use for 'Red', 'M'
+    value = models.CharField(max_length=100)
 
     def __str__(self):
         return f"{self.variant.name}: {self.value}"
 
 
+class ProductVariantMap(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='variant_mappings')
+    variant = models.ForeignKey(Variant, on_delete=models.CASCADE)
+
+    class Meta:
+        unique_together = (('product', 'variant'),)
+
+    def __str__(self):
+        return f"{self.product.ProductName} uses {self.variant.name}"
+
 
 class ProductVariantCombination(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='combinations')
-    combination_code = models.CharField(max_length=255, unique=True)  # add like this  SHIRT-M-RED
+    combination_code = models.CharField(max_length=255, unique=True)  # e.g., SHIRT-M-RED
     subvariants = models.ManyToManyField(SubVariant, related_name='combinations')
     stock = models.DecimalField(default=0.00, max_digits=20, decimal_places=8)
 

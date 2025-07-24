@@ -16,7 +16,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path
+from inventory.views import AdminTokenObtainPairView,AdminLogout
 
 urlpatterns = [
     path('admin/', admin.site.urls),
+    path('adminlogin/', AdminTokenObtainPairView.as_view(), name='admin_token_obtain_pair'),
+    path('adminlogout/',AdminLogout.as_view(),name='adminlogout'),
+
+
 ]
