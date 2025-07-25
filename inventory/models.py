@@ -40,7 +40,7 @@ class Products(models.Model):
 
 class Variant(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    name = models.CharField(max_length=100, unique=True)  # e.g., Size, Color
+    name = models.CharField(max_length=100, unique=True)  
 
     def __str__(self):
         return self.name
@@ -71,7 +71,7 @@ class ProductVariantMap(models.Model):
 class ProductVariantCombination(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     product = models.ForeignKey(Products, on_delete=models.CASCADE, related_name='combinations')
-    combination_code = models.CharField(max_length=255, unique=True)  # e.g., SHIRT-M-RED
+    combination_code = models.CharField(max_length=255, unique=True) 
     subvariants = models.ManyToManyField(SubVariant, related_name='combinations')
     stock = models.DecimalField(default=0.00, max_digits=20, decimal_places=8)
 

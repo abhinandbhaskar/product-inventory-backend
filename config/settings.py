@@ -95,17 +95,15 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 
 SESSION_ENGINE = 'django.contrib.sessions.backends.db'
 
-SESSION_COOKIE_SAMESITE = "Lax"  # or "None" (if cross-site)
-SESSION_COOKIE_SECURE = False    # Set True only if using HTTPS
+SESSION_COOKIE_SAMESITE = "Lax"  
+SESSION_COOKIE_SECURE = False    
 
-# settings.py
 
-# Add these settings:
 SESSION_COOKIE_SAMESITE = 'Lax'
 SESSION_COOKIE_HTTPONLY = True
-SESSION_COOKIE_SECURE = False  # True in production with HTTPS
+SESSION_COOKIE_SECURE = False  
 CSRF_COOKIE_SAMESITE = 'Lax'
-CSRF_COOKIE_HTTPONLY = False  # Should be False for JS to access
+CSRF_COOKIE_HTTPONLY = False 
 CORS_EXPOSE_HEADERS = ['Content-Type', 'X-CSRFToken']
 CORS_ALLOW_CREDENTIALS = True
 
@@ -154,6 +152,26 @@ USE_I18N = True
 USE_TZ = True
 
 
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'file': {
+            'level': 'DEBUG',
+            'class': 'logging.FileHandler',
+            'filename': 'api.log',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['file'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}
+
+
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.2/howto/static-files/
 
@@ -166,3 +184,4 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+
