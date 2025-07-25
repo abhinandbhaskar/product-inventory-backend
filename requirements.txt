@@ -1,0 +1,11 @@
+asgiref==3.9.1
+Django==5.2.4
+django-cors-headers==4.7.0
+django-versatileimagefield @ git+https://github.com/respondcreate/django-versatileimagefield.git@8a2922254c360d827eca5d6635d18720204964ea
+djangorestframework==3.16.0
+djangorestframework_simplejwt==5.5.1
+pillow==11.3.0
+PyJWT==2.10.1
+python-magic-bin==0.4.14
+sqlparse==0.5.3
+tzdata==2025.2
